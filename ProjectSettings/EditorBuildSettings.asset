@@ -5,10 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 3a2aff69dbab8724f9a28f962e246687
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Microscope_scene.unity
     guid: 9f7a08bed39750d4187f694be95f65c4
   - enabled: 0
@@ -17,6 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Microscope_vision.unity
     guid: 7332997e26eae15429327cd47316fa91
+  - enabled: 1
+    path: Assets/Scenes/Microscope_visualisation.unity
+    guid: f63fd05b669402649a1899ea0f4ba425
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: f1eb0d84071dfe046a7318bc132f514b,
       type: 2}
