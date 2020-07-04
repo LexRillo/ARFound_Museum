@@ -13,11 +13,14 @@ public class Switch_microscope_projection : MonoBehaviour
     private float distance;
     public RectTransform microscope_vision;
     Vector3 initialScale = new Vector3(1.3f, 1.3f, 1.3f);
+    Material blurEffectMat;
     void Awake() 
     {
         arFaceManager = GetComponent<ARFaceManager>();
         int value = StaticContainer.lensIndex;
         arFaceManager.facePrefab.transform.GetChild(0).GetComponent<MeshRenderer>().material = vitrines[value].Material;
+        blurEffectMat = arFaceManager.facePrefab.transform.GetChild(6).GetComponent<MeshRenderer>().material;
+        Debug.Log(blurEffectMat.name);
     }
 
     private void Update()
@@ -56,6 +59,11 @@ public class Switch_microscope_projection : MonoBehaviour
 
         }
         return false;
+    }
+
+    public void changeBlurriness(float bluriness_index)
+    {
+        blurEffectMat.SetFloat("_Size", bluriness_index);
     }
 }
 
