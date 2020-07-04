@@ -1,3 +1,6 @@
+// Original code: https://github.com/Unity-Technologies/arfoundation-samples
+// Modified for alternative use of ARFoundation
+
 using System.Text;
 using Unity.Collections;
 using UnityEngine;

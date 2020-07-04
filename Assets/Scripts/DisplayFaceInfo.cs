@@ -1,3 +1,5 @@
+// Original code from: https://github.com/Unity-Technologies/arfoundation-samples
+
 using System.Text;
 using Unity.Collections;
 using UnityEngine;
