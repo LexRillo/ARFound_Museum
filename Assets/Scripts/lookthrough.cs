@@ -24,6 +24,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField] private Material defaultMaterial;
         Transform _selection;
         public string SceneToSwitchTo;
+        public Animator transitionSceneAnim;
         //
 
         void Awake()
@@ -107,6 +108,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void switchscene(int index)
         {
             StaticContainer.lensIndex = index;
+            transitionSceneAnim.Play("Microscope_fade_in");
             SceneManager.LoadSceneAsync(SceneToSwitchTo, LoadSceneMode.Single);
         }
 
