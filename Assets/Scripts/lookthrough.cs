@@ -120,5 +120,33 @@ namespace UnityEngine.XR.ARFoundation.Samples
         {
             return _selection;
         }
+
+        public void resetPositions()
+        {
+            GameObject[] objs;
+            GameObject[] refobjs;
+            objs = GameObject.FindGameObjectsWithTag("ARContainer");
+            refobjs = GameObject.FindGameObjectsWithTag("ARrefpositions");
+            if (objs.Length > 0 && refobjs.Length > 0)
+            {
+                for (int k = 0; k < objs.Length; k++)
+                {
+
+                    //objs[i].transform.position = refobjs[i].transform.position;
+                    for (int i = 0; i < objs[k].transform.childCount; i++)
+                    {
+                        GameObject this_child = objs[k].transform.GetChild(i).gameObject;
+                        GameObject this_ref_child = refobjs[k].transform.GetChild(i).gameObject;
+                        //Debug.Log("this_child "+ this_child.name + " corresponding " + refobjs[k].transform.GetChild(i).name);
+                        //Debug.Log("this_transf " + this_child.transform.position + " corresponding " + refobjs[k].transform.GetChild(i).transform.position);
+                        if (this_ref_child.tag ==  "refobject")
+                        {
+                            this_child.transform.position = refobjs[k].transform.GetChild(i).gameObject.transform.position;
+                        }
+                    }
+
+                }
+            }
+        }
     }
 }

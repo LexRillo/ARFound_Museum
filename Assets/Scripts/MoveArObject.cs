@@ -47,7 +47,20 @@ public class MoveArObject : MonoBehaviour
             original.transform.position = clone.transform.position;
             Destroy(clone);
             //original.transform.position = positionToHold.position;
-            original.GetComponent<Renderer>().enabled = true;
+            var selectionRenderer = original.GetComponent<Renderer>();
+            if (selectionRenderer == null)
+            {
+                for (int i = 0; i < original.transform.childCount; i++)
+                {
+                    var s = original.transform.GetChild(i);
+                    selectionRenderer = s.GetComponent<Renderer>();
+                    selectionRenderer.enabled = true;
+                }
+            }
+            else
+            {
+                selectionRenderer.enabled = true;
+            }
         }        
     }
 }
