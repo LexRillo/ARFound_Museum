@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 namespace UnityEngine.XR.ARFoundation.Samples
 {
@@ -24,7 +25,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         [SerializeField] private Material defaultMaterial;
         Transform _selection;
         public string SceneToSwitchTo;
-        public Animator transitionSceneAnim;
+        public GameObject TransitionObject;
         //
 
         void Awake()
@@ -91,13 +92,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     if (selection.name == "Upper_lens_holder_microscope" && 
                         m_camera.transform.rotation.eulerAngles.x > 80 && m_camera.transform.rotation.eulerAngles.x < 90)
                     {
-                        switchscene(0);
+                        StartCoroutine(switchscene(0));
                     }
 
                     if (selection.name == "Upper_lens_holder_microscope1" &&
                         m_camera.transform.rotation.eulerAngles.x > 80 && m_camera.transform.rotation.eulerAngles.x < 90)
                     {
-                        switchscene(1);
+                        StartCoroutine(switchscene(1));
                     }
 
                     _selection = selection;
@@ -105,10 +106,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        public void switchscene(int index)
+        IEnumerator switchscene(int index)
         {
             StaticContainer.lensIndex = index;
+            TransitionObject.SetActive(true);
+            Animator transitionSceneAnim = TransitionObject.GetComponent<Animator>();
             transitionSceneAnim.Play("Microscope_fade_in");
+            yield return new WaitForSeconds(1f);
             SceneManager.LoadSceneAsync(SceneToSwitchTo, LoadSceneMode.Single);
         }
 

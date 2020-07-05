@@ -1438,7 +1438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1851937700
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1485,7 +1485,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1851937699}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -1814,6 +1814,7 @@ MonoBehaviour:
   highlightMaterial: {fileID: 2100000, guid: 37b6a919e7bc99143b8245d8520d04a1, type: 2}
   defaultMaterial: {fileID: 2100000, guid: 339131943a102f74c85d6266a70e888c, type: 2}
   SceneToSwitchTo: Microscope_vision
+  TransitionObject: {fileID: 1851937699}
 --- !u!114 &2003843716
 MonoBehaviour:
   m_ObjectHideFlags: 0
