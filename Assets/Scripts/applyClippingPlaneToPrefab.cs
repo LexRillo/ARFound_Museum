@@ -40,4 +40,16 @@ public class applyClippingPlaneToPrefab : MonoBehaviour
             }
         }      
     }
+
+    public void playAnim()
+    {
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("ARContainer");
+        if (objs.Length > 0)
+        {
+            for (int i = 0; i < objs.Length; i++)
+            {
+                objs[i].GetComponent<AnimateLightParticle>().startTheAnimation();
+            }
+        }
+    }
 }
