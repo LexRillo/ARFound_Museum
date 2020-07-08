@@ -31,33 +31,16 @@ namespace UnityEngine.XR.ARFoundation.Samples
         void Awake()
         {
             m_CameraManager = GetComponent<ARSessionOrigin>().camera?.GetComponent<ARCameraManager>();
+            StaticContainer.lensIndex = 1;
+            StaticContainer.slideIndex = 0;
         }
 
         void Update()
         {
+            Debug.Log("lensIndex" + StaticContainer.lensIndex + StaticContainer.slideIndex);
             if (_selection != null)
             {
-                if (_selection.childCount == 0)
-                {
-                    var selectionRenderer = _selection.GetComponent<Renderer>();
-                    if (selectionRenderer != null)
-                    {
-                        selectionRenderer.material = defaultMaterial;
-                    }
-                }
-                else
-                {
-                    for (int i = 0; i < _selection.childCount; i++)
-                    {
-                        var s = _selection.GetChild(i);
-                        var selectionRenderer = s.GetComponent<Renderer>();
-                        if (selectionRenderer != null)
-                        {
-                            selectionRenderer.material = defaultMaterial;
-                        }
-                    }
-                }
-                
+                _selection.GetComponent<ChangeToScriptedMat>().revertToOriginalMat();                               
                 _selection = null;
             }
             Camera m_camera = m_CameraManager.GetComponent<Camera>();
@@ -67,38 +50,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
             if (Physics.Raycast(ray, out hit))
             {
                 var selection = hit.transform;
-                if (selection.CompareTag(selectableTag))
-                {
-                    if (selection.childCount == 0) {
-                        var selectionRenderer = selection.GetComponent<Renderer>();
-                        if (selectionRenderer != null)
-                        {
-                            selectionRenderer.material = highlightMaterial;
-                        }
-                    }
-                    else
-                    {
-                        for(int i = 0; i < selection.childCount; i++)
-                        {
-                            var s = selection.GetChild(i);
-                            var selectionRenderer = s.GetComponent<Renderer>();
-                            if (selectionRenderer != null)
-                            {
-                                selectionRenderer.material = highlightMaterial;
-                            }
-                        }
-                    }
 
+                //if (selection.CompareTag(selectableTag))
+                if (selection.GetComponent<ChangeToScriptedMat>() != null)
+                {
+                    selection.GetComponent<ChangeToScriptedMat>().changeMat(highlightMaterial);
                     if (selection.name == "Upper_lens_holder_microscope" && 
-                        m_camera.transform.rotation.eulerAngles.x > 80 && m_camera.transform.rotation.eulerAngles.x < 90)
+                        m_camera.transform.rotation.eulerAngles.x > 80 && m_camera.transform.rotation.eulerAngles.x < 90 && StaticContainer.lensIndex == 1)
                     {
-                        StartCoroutine(switchscene(0));
+                        StartCoroutine(switchscene());
                     }
 
                     if (selection.name == "Upper_lens_holder_microscope1" &&
-                        m_camera.transform.rotation.eulerAngles.x > 80 && m_camera.transform.rotation.eulerAngles.x < 90)
+                        m_camera.transform.rotation.eulerAngles.x > 80 && m_camera.transform.rotation.eulerAngles.x < 90 && StaticContainer.lensIndex == 2)
                     {
-                        StartCoroutine(switchscene(1));
+                        StartCoroutine(switchscene());
                     }
 
                     _selection = selection;
@@ -106,9 +72,9 @@ namespace UnityEngine.XR.ARFoundation.Samples
             }
         }
 
-        IEnumerator switchscene(int index)
+        IEnumerator switchscene()
         {
-            StaticContainer.lensIndex = index;
+            //StaticContainer.lensIndex = index;
             TransitionObject.SetActive(true);
             Animator transitionSceneAnim = TransitionObject.GetComponent<Animator>();
             transitionSceneAnim.Play("Microscope_fade_in");
@@ -154,6 +120,8 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
                 }
             }
+            StaticContainer.lensIndex = 1;
+            StaticContainer.slideIndex = 0;
         }
     }
 }

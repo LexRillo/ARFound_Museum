@@ -4,4 +4,5 @@ using UnityEngine;
 
 public static class StaticContainer {
     public static int lensIndex { get; set; }
+    public static int slideIndex { get; set; }
 }

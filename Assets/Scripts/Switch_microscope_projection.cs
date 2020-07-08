@@ -17,10 +17,19 @@ public class Switch_microscope_projection : MonoBehaviour
     void Awake() 
     {
         arFaceManager = GetComponent<ARFaceManager>();
-        int value = StaticContainer.lensIndex;
-        arFaceManager.facePrefab.transform.GetChild(0).GetComponent<MeshRenderer>().material = vitrines[value].Material;
+        int lensValue = StaticContainer.lensIndex;
+        int slidesValue = StaticContainer.slideIndex;
+        arFaceManager.facePrefab.transform.GetChild(0).GetComponent<MeshRenderer>().material = vitrines[slidesValue].Material;
+        Debug.Log(vitrines[slidesValue].Material.name);
         blurEffectMat = arFaceManager.facePrefab.transform.GetChild(6).GetComponent<MeshRenderer>().material;
-        Debug.Log(blurEffectMat.name);
+        if (lensValue ==1 && (slidesValue == 1 || slidesValue == 2))
+        {
+            changeBlurriness(0);
+        }
+        else if(lensValue == 2 && slidesValue == 3)
+        {
+            changeBlurriness(0);
+        }
     }
 
     private void Update()
