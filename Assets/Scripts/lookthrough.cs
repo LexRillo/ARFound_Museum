@@ -116,6 +116,13 @@ namespace UnityEngine.XR.ARFoundation.Samples
             SceneManager.LoadSceneAsync(SceneToSwitchTo, LoadSceneMode.Single);
         }
 
+        public Ray myRayCast()
+        {
+            Camera m_camera = m_CameraManager.GetComponent<Camera>();
+            Ray ray = new Ray(m_camera.transform.position, m_camera.transform.forward);
+            return ray;
+        }
+
         public Transform getSelection()
         {
             return _selection;
@@ -139,7 +146,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                         GameObject this_ref_child = refobjs[k].transform.GetChild(i).gameObject;
                         //Debug.Log("this_child "+ this_child.name + " corresponding " + refobjs[k].transform.GetChild(i).name);
                         //Debug.Log("this_transf " + this_child.transform.position + " corresponding " + refobjs[k].transform.GetChild(i).transform.position);
-                        if (this_ref_child.tag ==  "refobject")
+                        if (this_ref_child.CompareTag("refobject"))
                         {
                             this_child.transform.position = refobjs[k].transform.GetChild(i).gameObject.transform.position;
                         }
