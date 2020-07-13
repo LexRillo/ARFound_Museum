@@ -26,6 +26,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         Transform _selection;
         public string SceneToSwitchTo;
         public GameObject TransitionObject;
+        private Transform handle_selected = null;
         //
 
         void Awake()
@@ -37,7 +38,6 @@ namespace UnityEngine.XR.ARFoundation.Samples
 
         void Update()
         {
-            Debug.Log("lensIndex" + StaticContainer.lensIndex + StaticContainer.slideIndex);
             if (_selection != null)
             {
                 _selection.GetComponent<ChangeToScriptedMat>().revertToOriginalMat();                               
@@ -68,6 +68,21 @@ namespace UnityEngine.XR.ARFoundation.Samples
                     }
 
                     _selection = selection;
+                }
+            }
+
+            //if (Input.touchCount == 1 && handle_selected == null)
+            //{
+            //    Touch touch = Input.GetTouch(0);
+            //    MoveMirrorHolder_Selection(touch);
+            //}else 
+            if (Input.touchCount == 1)
+            {
+                Touch touch = Input.GetTouch(0);
+                // check if it's close enough to the dial. otherwise deselect
+                if (touch.phase == TouchPhase.Moved)
+                {
+                    MoveMirrorHolder_Rotation(touch);
                 }
             }
         }
@@ -123,5 +138,50 @@ namespace UnityEngine.XR.ARFoundation.Samples
             StaticContainer.lensIndex = 1;
             StaticContainer.slideIndex = 0;
         }
+        
+        public void MoveMirrorHolder_Selection(Touch touch)
+        {
+            Camera m_camera = m_CameraManager.GetComponent<Camera>();
+            Ray ray = m_camera.ScreenPointToRay(touch.position);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit) && hit.transform.name == "microscope_mirror_holder")
+            {
+                //Debug.Log("This is where I tocuh " + hit.point + " object transform " + hit.transform.position);
+                handle_selected = hit.transform;
+                for (int i = 0; i < hit.transform.childCount; i++)
+                {
+                    if (hit.transform.GetChild(i).name == "HOLDER_DIAL")
+                    {
+                        //Vector3 center = hit.transform.GetChild(i).GetComponent<Renderer>().bounds.center;
+                        
+                    }
+                }
+            }
+        }
+
+        public void MoveMirrorHolder_Rotation(Touch touch)
+        {
+            Camera m_camera = m_CameraManager.GetComponent<Camera>();
+            Vector2 first_point = touch.position - touch.deltaPosition;
+            Ray first_ray = m_camera.ScreenPointToRay(first_point);
+            RaycastHit first_hit;
+            if (Physics.Raycast(first_ray, out first_hit) && first_hit.transform.name == "microscope_mirror_holder")
+            {
+                Ray second_ray = m_camera.ScreenPointToRay(first_point);
+                RaycastHit second_hit;
+                if (Physics.Raycast(second_ray, out second_hit) && second_hit.transform.name == "microscope_mirror_holder")
+                {
+                    Vector3 center = first_hit.transform.FindChild("HOLDER_DIAL").GetComponent<Renderer>().bounds.center;
+
+                    Vector2 first_vector = new Vector2(first_hit.point.y - center.y, first_hit.point.z - center.z);
+                    Vector2 second_vector = new Vector2(second_hit.point.y - center.y, second_hit.point.z - center.z);
+
+                    float angle = Vector2.Angle(first_vector, second_vector);
+                    first_hit.transform.Rotate(0f, 0f, touch.deltaPosition.x);
+                }
+            }
+        }
+
     }
 }

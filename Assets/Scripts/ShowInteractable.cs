@@ -21,7 +21,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
         public void showIteract()
         {            
             objs = GameObject.FindGameObjectsWithTag("ARContainer");
-            Debug.Log("number of objects" + objs.Length);
+            
             if (objs.Length > 0)
             {
                 for (int i = 0; i < objs.Length; i++)
