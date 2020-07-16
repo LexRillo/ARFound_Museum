@@ -1496,6 +1496,7 @@ GameObject:
   - component: {fileID: 2003843709}
   - component: {fileID: 2003843714}
   - component: {fileID: 2003843715}
+  - component: {fileID: 2003843716}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -1602,6 +1603,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mat: {fileID: 2100000, guid: 339131943a102f74c85d6266a70e888c, type: 2}
   newmat: {fileID: 2100000, guid: d4073664acb62fa4285f006bf54f0355, type: 2}
+--- !u!114 &2003843716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003843708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b384fe11c21d0414b8e90528a65085c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2049419935
 GameObject:
   m_ObjectHideFlags: 0
