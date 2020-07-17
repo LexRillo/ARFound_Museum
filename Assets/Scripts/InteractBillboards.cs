@@ -41,6 +41,11 @@ public class InteractBillboards : MonoBehaviour
         if (Physics.Raycast(ray, out hit))
         {
             //GameObject touched_obj = hit.transform.gameObject;
+            if (hit.transform.tag == "Billboard_Sound")
+            {
+                hit.transform.GetComponent<AudioSource>().Play();
+            }
+
             for (int i = 0; i < hit.transform.childCount; i++)
             {
                 if (hit.transform.GetChild(i).tag == "Billboard")
