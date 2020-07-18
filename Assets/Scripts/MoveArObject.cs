@@ -87,7 +87,6 @@ public class MoveArObject : MonoBehaviour
                 if (original.name == "Upper_lens_holder_microscope" || original.name == "Upper_lens_holder_microscope1")
                 {
                     Transform corresponding_child = refobjs[k].transform.Find("Upper_lens_holder_microscope");
-                    checkIfLensInPos(corresponding_child, original);
                     if (corresponding_child != null)
                     {
                         //Debug.Log("correspondingchidl" + corresponding_child.position);
@@ -95,6 +94,7 @@ public class MoveArObject : MonoBehaviour
                         //Debug.Log("closeness " +closeness);
                         if (closeness > 0.992)
                         {
+                            checkIfLensInPos(corresponding_child, original);
                             return corresponding_child.position;
                         }
                     }
@@ -185,7 +185,8 @@ public class MoveArObject : MonoBehaviour
                 {
                     StaticContainer.slideIndex = 1;
                     lens2.position = refobjs[k].transform.Find("Upper_lens_holder_microscope1").transform.position;
-                }else if(lens1.position != focus.position && lens2.position != focus.position)
+                }
+                else if(lens1.position != focus.position && lens2.position != focus.position)
                 {
                     StaticContainer.slideIndex = 0;
                 }
