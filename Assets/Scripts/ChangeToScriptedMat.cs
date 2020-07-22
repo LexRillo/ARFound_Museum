@@ -19,7 +19,7 @@ public class ChangeToScriptedMat : MonoBehaviour
             {
                 var s = this.transform.GetChild(i);                
                 selectionRenderer = s.GetComponent<Renderer>();
-                if (selectionRenderer != null)
+                if (selectionRenderer != null && s.tag != "NoHighlight")
                 {
                     selectionRenderer.material = newMaterial;
                 }
@@ -60,7 +60,7 @@ public class ChangeToScriptedMat : MonoBehaviour
                 var c_s = corresponding_object.transform.GetChild(i);
                 selectionRenderer = s.GetComponent<Renderer>();
                 correspondingRenderer = c_s.transform.GetComponent<Renderer>();
-                if (selectionRenderer != null)
+                if (selectionRenderer != null && s.tag != "NoHighlight")
                 {
                     selectionRenderer.material = correspondingRenderer.material;
                 }                              
