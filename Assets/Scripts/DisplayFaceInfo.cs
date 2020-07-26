@@ -149,7 +149,7 @@ namespace UnityEngine.XR.ARFoundation.Samples
                 m_Info.Append($"Distance from face: {my_text}\n");
 				var camera = m_CameraManager.GetComponent<Camera>();
 				m_Info.Append($"Camera position: {camera.transform.position.ToString()}\n");
-				m_Info.Append($"Camera rotation: {camera.transform.rotation.ToEulerAngles().ToString()}\n");
+				m_Info.Append($"Camera rotation: {camera.transform.rotation.eulerAngles.ToString()}\n");
             }
 
             if (m_CameraManager)

@@ -6,6 +6,12 @@ TagManager:
   tags:
   - Selectable
   - ARContainer
+  - ARrefpositions
+  - refobject
+  - Indicators
+  - Billboard
+  - Billboard_Sound
+  - NoHighlight
   layers:
   - Default
   - TransparentFX
