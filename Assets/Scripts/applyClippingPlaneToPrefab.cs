@@ -13,7 +13,7 @@ public class applyClippingPlaneToPrefab : MonoBehaviour
         for (int i = 0; i < Go.transform.childCount; i++)
         {
             GameObject child = Go.transform.GetChild(i).gameObject;
-            if (child.GetComponent<Renderer>() != null) {
+            if (child.GetComponent<Renderer>() != null && child.tag != "NoHighlight") {
                 child.GetComponent<Renderer>().material = m;
             }
             setMaterial(child, m);
