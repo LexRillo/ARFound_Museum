@@ -21,6 +21,7 @@ public class SceneSwitch : MonoBehaviour
 
     public void SwitchScene()
     {
+        Debug.Log("I AM LOADING A NEW SCENE");
         SceneManager.LoadSceneAsync(SceneToSwitchTo, LoadSceneMode.Single);
     }
 }
