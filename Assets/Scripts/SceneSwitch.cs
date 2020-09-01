@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Script for loading other scenes
 public class SceneSwitch : MonoBehaviour
 {
     public string SceneToSwitchTo;

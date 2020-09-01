@@ -4,18 +4,14 @@ using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 
+// Script that manages the behaviour of the menu
 public class MenuManagerScript : MonoBehaviour
 {
     public Transform mainMenugui;
     public Transform settingsgui;
     public Transform visualizationgui;
     public Transform interactionsgui;
-
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    if()
-    //}
+    // The following methods allow the user to move from one menu to another. (Most are no longer used)
     public void openSettings()
     {
         mainMenugui.gameObject.SetActive(false);

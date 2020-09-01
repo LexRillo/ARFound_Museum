@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// When the corrisponding button is pressed, orchestrate playing the animation of the light particle
 public class AnimateLightParticle : MonoBehaviour
 {
     public GameObject light_particle_prefab;

@@ -2,27 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// This script describes the grabbing and dropping objects interaction
 public class MoveArObject : MonoBehaviour
 {
     public GameObject theSession;
     public GameObject ARcamera;
     
+    // This is the variable describing the object that is being selected. It is requested from the lookthrough script
     private Transform _selection = null;
+    // When moving an object this variable holds where the original one is
     private GameObject original = null;
+    // When moving an object this variable holds the object that is shown in the camera
     private GameObject clone;
 
-
+    // function that deals with the grab object interaction while the button is pressed
     public void holdingObject()
     {
         _selection = theSession.GetComponent<UnityEngine.XR.ARFoundation.Samples.lookthrough>().getSelection();
         if (_selection != null)
         {
             original = _selection.gameObject;
-                        
+            // create a clone of the selected object and attach it to the camera            
             clone = Instantiate(original, _selection.position, _selection.rotation);
             clone.transform.localScale = original.transform.localScale;
             clone.transform.parent = ARcamera.transform;
 
+            // Make the original object invisible
             var selectionRenderer = original.GetComponent<Renderer>();
             if (selectionRenderer == null)
             {
@@ -41,11 +46,11 @@ public class MoveArObject : MonoBehaviour
         }
     }
 
+    // function that deals with the grab object interaction when the button is released
     public void droppingObject()
     {
         if (original != null) {
-
-            // Debug.Log(getCloseness());
+            // if the object is close to a default position then snap that object to that default position
             // if closeness > 0.992 then original.transform.position = the position of the reference
             Vector3 resulting_position = getCloseness();
             if (resulting_position != Vector3.zero)
@@ -57,8 +62,10 @@ public class MoveArObject : MonoBehaviour
                 original.transform.position = clone.transform.position;
             }
             
+            // destroy the object that was attached to the camera
             Destroy(clone);
-            //original.transform.position = positionToHold.position;
+
+            // make the original object visible again but in the new position that the camera has moved to
             var selectionRenderer = original.GetComponent<Renderer>();
             if (selectionRenderer == null)
             {
@@ -76,12 +83,14 @@ public class MoveArObject : MonoBehaviour
         }        
     }
 
+    // function to calculate how close a point is to where the center of the camera is facing
     public Vector3 getCloseness()
     {
         Ray this_ray = theSession.GetComponent<UnityEngine.XR.ARFoundation.Samples.lookthrough>().myRayCast();
         GameObject[] refobjs = GameObject.FindGameObjectsWithTag("ARrefpositions");
         if (refobjs.Length > 0)
         {
+            // iterate through all the objects. If the selected object is an eyepiece or a slide and they move close to an appropriate default position then return that closeness.
             for (int k = 0; k < refobjs.Length; k++)
             {
                 if (original.name == "Upper_lens_holder_microscope" || original.name == "Upper_lens_holder_microscope1")
@@ -89,9 +98,7 @@ public class MoveArObject : MonoBehaviour
                     Transform corresponding_child = refobjs[k].transform.Find("Upper_lens_holder_microscope");
                     if (corresponding_child != null)
                     {
-                        //Debug.Log("correspondingchidl" + corresponding_child.position);
                         float closeness = Vector3.Dot(this_ray.direction.normalized, (corresponding_child.position - this_ray.origin).normalized);
-                        //Debug.Log("closeness " +closeness);
                         if (closeness > 0.992)
                         {
                             checkIfLensInPos(corresponding_child, original);
@@ -105,7 +112,6 @@ public class MoveArObject : MonoBehaviour
                     checkIfSlideInPos(corresponding_child, original);
                     if (corresponding_child != null)
                     {
-                        //Debug.Log("correspondingchidl" + corresponding_child.position);
                         float closeness = Vector3.Dot(this_ray.direction.normalized, (corresponding_child.position - this_ray.origin).normalized);
                         if (closeness > 0.992)
                         {
@@ -118,6 +124,7 @@ public class MoveArObject : MonoBehaviour
         return Vector3.zero;
     }
 
+    // when snapping slides, the index on the static class needs to change. That is what this function does
     private void checkIfSlideInPos(Transform focus, GameObject selected)
     {
         GameObject[] objs = GameObject.FindGameObjectsWithTag("ARContainer");
@@ -161,6 +168,7 @@ public class MoveArObject : MonoBehaviour
         }
     }
 
+    // when snapping eyepieces, the index on the static class needs to change. That is what this function does
     private void checkIfLensInPos(Transform focus, GameObject selected)
     {
         GameObject[] objs = GameObject.FindGameObjectsWithTag("ARContainer");

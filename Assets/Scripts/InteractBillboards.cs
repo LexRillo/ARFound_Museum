@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
+//  Script that describes the behaviour of the billboards from the visualization scene
 [RequireComponent(typeof(ARSession))]
 [RequireComponent(typeof(ARSessionOrigin))]
 public class InteractBillboards : MonoBehaviour
 {
+    // get the camera position and direction
     ARCameraManager m_CameraManager;
     Camera m_camera;
     GameObject current_billboard = null;
@@ -21,6 +23,7 @@ public class InteractBillboards : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // If the user taps the section of the microscope it will show the corresponding billboard
         if (Input.touchCount == 1)
         {
             Touch touch = Input.GetTouch(0);
@@ -33,19 +36,22 @@ public class InteractBillboards : MonoBehaviour
         }
     }
 
+    // Display the billboard and enable the audio interaction on the billboard
     private void showBillboard(Touch touch)
     {
         Ray ray = m_camera.ScreenPointToRay(touch.position);
         RaycastHit hit;
 
+        //Raycast from the camera to the scene
         if (Physics.Raycast(ray, out hit))
         {
-            //GameObject touched_obj = hit.transform.gameObject;
+            // if ray hits the audio tag, then play it
             if (hit.transform.tag == "Billboard_Sound")
             {
                 hit.transform.GetComponent<AudioSource>().Play();
             }
 
+            // iterate through the children to check if the collided object contains a billboard
             for (int i = 0; i < hit.transform.childCount; i++)
             {
                 if (hit.transform.GetChild(i).tag == "Billboard")
@@ -61,6 +67,7 @@ public class InteractBillboards : MonoBehaviour
         }
         else
         {
+            // If there was no hit and there was a billboard being shown, then make billboard invisible
             if (current_billboard != null)
             {
                 current_billboard.SetActive(false);
@@ -68,6 +75,7 @@ public class InteractBillboards : MonoBehaviour
         }
     }
 
+    // This is used to make sure that the billboard is readable from the camera position and angle
     // Code adapted from: https://wiki.unity3d.com/index.php/CameraFacingBillboard
     private void RotateTowardsCamera()
     {

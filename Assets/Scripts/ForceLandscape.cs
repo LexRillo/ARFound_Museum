@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script that forces the the engine to show in the content Landscape mode and Requests access to the camera (used for testing on iOS devices)
 public class ForceLandscape : MonoBehaviour
 {
     // Start is called before the first frame update

@@ -8,12 +8,17 @@ public class Switch_microscope_projection : MonoBehaviour
     private ARFaceManager arFaceManager;
 
     [SerializeField]
+    // slides from that appear in the interaction scene
     public VitrineMaterial[] vitrines;
+    // troubleshooting message
     public GameObject NofaceMessage;
     private float distance;
     public RectTransform microscope_vision;
     Vector3 initialScale = new Vector3(1.3f, 1.3f, 1.3f);
+    // Material for blurr effect
     Material blurEffectMat;
+
+    // Prepare scene with the values given from the interaction scene
     void Awake() 
     {
         arFaceManager = GetComponent<ARFaceManager>();
@@ -21,6 +26,8 @@ public class Switch_microscope_projection : MonoBehaviour
         int slidesValue = StaticContainer.slideIndex;
         arFaceManager.facePrefab.transform.GetChild(0).GetComponent<MeshRenderer>().material = vitrines[slidesValue].Material;
         Debug.Log(vitrines[slidesValue].Material.name);
+
+        // Get blur material and apply if using an incorrect eyepiece for a slide
         blurEffectMat = arFaceManager.facePrefab.transform.GetChild(6).GetComponent<MeshRenderer>().material;
         if (lensValue ==1 && (slidesValue == 1 || slidesValue == 2))
         {
@@ -34,6 +41,7 @@ public class Switch_microscope_projection : MonoBehaviour
 
     private void Update()
     {
+        // Show troubleshooting message if the face is too far from the camera
         if (checkIfFaceIsClose())
         {
             NofaceMessage.SetActive(false);
@@ -52,6 +60,7 @@ public class Switch_microscope_projection : MonoBehaviour
         }
     }
 
+    // Method find the distance and rerturning whether it is too far from the camera
     private bool checkIfFaceIsClose()
     {
         if (arFaceManager.trackables.count > 0)
@@ -70,6 +79,7 @@ public class Switch_microscope_projection : MonoBehaviour
         return false;
     }
 
+    // apply blur effect from the material
     public void changeBlurriness(float bluriness_index)
     {
         blurEffectMat.SetFloat("_Size", bluriness_index);
